@@ -113,3 +113,70 @@ Some inter-networking devices are:
     Typical Inter-Networking Structure
   ]
 )
+
+== TCP/IP Protocol Stack
+
+*TCP/IP#footnote[Funded by US military, started in 1970s] (Transmission Control Protocol/Internet Protocol)* is the foundational set of communication protocols that powers the internet, enabling devices to connect and exchange data globally. It acts as a common language for computers and thus, bridges the gap between non-compatible platforms.\
+Instead of a 7-layer OSI model, it uses a simplified 4-layer model,
+#figure(
+  image("TCP:IP-Layers.png", height: 20%, fit: "contain"),
+  caption: [
+    Simplified 4-layer TCP/IP Model
+  ]
+)
+- *Application Layer* handles high-level protocols, representation, encoding, and dialog control (e.g., HTTP, FTP, SMTP)
+- *Transport Layer* manages end-to-end communication and data flow (mainly TCP and UDP)
+- *Network Layer* responsible for routing packets across networks (primarily the IP protocol)
+- *Link Layer* deals with the physical transmission of data (e.g., Ethernet)
+
+The *TCP/IP Protocol Suite* refers to a family of network protocols that enable internet communication. The data is sent from one node to the other as a sequence of datagrams, where each datagram is sent independently taking different routes with no guarantee of delivery.
+
+Some common protocols in the network layer are:
+- *Address Resolution Protocol (ARP)* maps IP addresses to hardware (MAC) addresses
+- *Reverse Address Resolution Protocol (RARP)* maps hardware addresses to IP addresses
+- *Internet Control Message Protocol (ICMP)* sends error messages and operational information in IP networks
+- *Internet Group Management Protocol (IGMP)* manages multicast group memberships in IP networks
+
+#definition[Internet Protocol][
+  IP is a core network protocol that routes data packets across interconnected networks. It is responsible for packet routing, fragmentation and best-effort delivery.
+]
+#definition[Transmission Control Protocol][
+  It is a reliable, connection-oriented transport protocol that ensures data is delivered accurately and in order. It is responsible for connection establishment, splitting a message into packets, resending packets lost in transit and reassembling packets at destination.
+]
+#definition[User Datagram Protocol][
+  It is a fast, connectionless transport protocol that sends data without guaranteeing delivery or order. It is generally used for smaller messages that fit into a packet, but is unreliable and has no error control. It is faster and simpler than TCP.
+]
+
+Encapsulation is the process of adding headers/trailers to data as it moves down the protocol stack. As data moves from the application layer to the physical layer, each layer adds its own control information in the form of headers/trailers and these headers/trailers are stripped as data moves up.
+#figure(
+  image("Encapsulation-TFTP.png", height: 20%),
+  caption: [
+    Encapsulation in TFTP
+  ]
+)
+
+*IP Layer* provides a connectionless, unreliable delivery system for packets, where each packet is independent#footnote[Each packet contains the address of the source and destination] of each other. It does not maintain history. This layer receives a data chunk from a higher layer (TCP or UDP) and prepends a header of at least 20 bytes containing information regarding route handling and flow control.
+
+#figure(
+  image("Format-IP-Datagram.png"),
+  caption: [
+    Format of an IP Datagram
+  ]
+)
+- *VER* specifies the IP protocol version (typically 4)
+- *HLEN* indicates the length of the IP header in 32-bit words ($[5, 15]$)
+- *Service Type (ToS)* suggests  priority and handling for the packet (e.g., delay, throughput) (8 bits)
+- *Total Length* is the total size of the IP datagram (header + data) in bytes ($2^16-1$ bytes)
+- *Identification* uniquely identifies each datagram for reassembly of fragments
+- *Flags* control fragmentation; indicate if the packet can be fragmented or if more fragments follow
+- *Fragment Offset* specifies the position of a fragment within the original datagram
+- *Time to Live (TTL)* limits the packet’s lifetime by counting down hops; discarded when it reaches zero (8 bits)
+- *Protocol* indicates the higher-level protocol (e.g., TCP, UDP) carried in the data (8 bits)
+- *Header Checksum*#footnote[The headers are treated as a sequence of 16-bit integers, which are all added (using 1s complement) and the 1s complement of the final sum is taken as the checksum. Any mismatch in the checksum causes the datagram to be discarded] error-checking value for the IP header to detect corruption (16 bits)
+- *Options* is an optional field Used for network testing, debugging, or special routing (variable width)
+- *Padding* is extra bytes added to ensure the header is a multiple of 32 bits
+- *Source/destination IP Address* are of 32 bits each
+
+We can view IP packets using packet sniffers like `Wireshark`, `tcpdump`, etc.
+
+= Week Two
