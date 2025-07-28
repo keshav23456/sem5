@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Get list of .typ files in the current directory only
-files=$(find . -maxdepth 1 -type f -name "*.typ" | sed 's|^\./||')
+# Get list of .typ files in current dir and its subdirectories (1 level deep)
+files=$(find . -maxdepth 2 -type f -name "*.typ" | sed 's|^\./||')
 
 # Check if there are any .typ files
 if [ -z "$files" ]; then
-  echo "❌ No .typ files found in the current directory."
+  echo "❌ No .typ files found in this folder or its subdirectories."
   exit 1
 fi
 

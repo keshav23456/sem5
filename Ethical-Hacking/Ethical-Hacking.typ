@@ -97,7 +97,7 @@ The following is an introduction to each layer:
 - *Presentation Layer* formats, encrypts, and translates data for the application layer above it
 - *Application Layer* provides network services directly to end-user applications
 #figure(
-  image("Data-Flow.png"),
+  image("imgs/Data-Flow.png"),
   caption: [
     Stack like flow of data
   ]
@@ -108,7 +108,7 @@ Some inter-networking devices are:
 - *Bridge/Layer-2 Switch* is a network device that connects and filters traffic between two or more network segments at the data link layer. It is used to connect two or more LANs together. It works at the data link layer
 - *Router/Layer-3 Switch* is a network device that directs data packets between different networks, choosing the best path for each packet. It is used to connect any combination of LANs and WANs. It works at the network layer
 #figure(
-  image("Internetworking-Structure.png"),
+  image("imgs/Internetworking-Structure.png"),
   caption: [
     Typical Inter-Networking Structure
   ]
@@ -119,7 +119,7 @@ Some inter-networking devices are:
 *TCP/IP#footnote[Funded by US military, started in 1970s] (Transmission Control Protocol/Internet Protocol)* is the foundational set of communication protocols that powers the internet, enabling devices to connect and exchange data globally. It acts as a common language for computers and thus, bridges the gap between non-compatible platforms.\
 Instead of a 7-layer OSI model, it uses a simplified 4-layer model,
 #figure(
-  image("TCP:IP-Layers.png", height: 20%, fit: "contain"),
+  image("imgs/TCP:IP-Layers.png", height: 20%, fit: "contain"),
   caption: [
     Simplified 4-layer TCP/IP Model
   ]
@@ -149,7 +149,7 @@ Some common protocols in the network layer are:
 
 Encapsulation is the process of adding headers/trailers to data as it moves down the protocol stack. As data moves from the application layer to the physical layer, each layer adds its own control information in the form of headers/trailers and these headers/trailers are stripped as data moves up.
 #figure(
-  image("Encapsulation-TFTP.png", height: 20%),
+  image("imgs/Encapsulation-TFTP.png", height: 20%),
   caption: [
     Encapsulation in TFTP
   ]
@@ -158,7 +158,7 @@ Encapsulation is the process of adding headers/trailers to data as it moves down
 *IP Layer* provides a connectionless, unreliable delivery system for packets, where each packet is independent#footnote[Each packet contains the address of the source and destination] of each other. It does not maintain history. This layer receives a data chunk from a higher layer (TCP or UDP) and prepends a header of at least 20 bytes containing information regarding route handling and flow control.
 
 #figure(
-  image("Format-IP-Datagram.png"),
+  image("imgs/Format-IP-Datagram.png"),
   caption: [
     Format of an IP Datagram
   ]
