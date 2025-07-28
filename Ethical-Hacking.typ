@@ -180,3 +180,62 @@ Encapsulation is the process of adding headers/trailers to data as it moves down
 We can view IP packets using packet sniffers like `Wireshark`, `tcpdump`, etc.
 
 = Week Two
+
+== IP Addressing and Routing
+
+#definition[Fragmentation][
+  It is the process of breaking a larger packet into smaller pieces for network transmission.
+]
+Fragmentation#footnote[Typically performed by routers when forwarding packets between networks with different MTUs] occurs when a packet is too large to be transmitted over a network segment with a smaller *Maximum Transmission Unit (MTU)*#footnote[Each layer has enforces some maximum size on the packets it can receive]. The IP layer divides#footnote[Each fragment is treated as a separate IP packet with its own header containing fields like identification, fragment offset, and flags] the larger packet into smaller fragments where each travels independently. The final reassembly occurs at the final destination host.
+
+There are two strategies for managing fragmented packets as they traverse multiple networks:
+- *Transparent Fragmentation:* Here, fragmentation and reassembly are handled within a single network segment. When a large packet enters a network with a smaller MTU, a router fragments the packet. All fragments are routed to the same exit router which reassembles them before forwarding the complete packet to the next network. Intermediate networks are unaware of fragmentation occurred, thus the name _transparent_. However, this method can overload the exit router and limit parallelism, also it requires a count/end-of-packet field to know when all the packets have been received.
+- *Non-Transparent Fragmentation:* Here fragmentation occurs as needed but reassembly is not performed by intermediate routers. All the fragments are forwarded independently through subsequent networks, possibly taking different paths, thus improving network resource utilization. Reassembly takes place only at the final destination host. This is the approach used by the IP protocol in the internet.
+
+#example[IP Fragmentation][
+  Consider two networks, $N_1$ and $N_2$ with MTUs $620$ bytes and $400$ bytes respectively. If some data of $1000$ bytes is to first pass through $N_1$ and then $N_2$, how will the fragmentation occur?
+  #align(center)[#image("IP-Fragmentation-Question.svg")]
+]
+#thmbox(
+  variant: "Explanation",
+  color: green,
+  numbering: none
+)[
+  - *Step 1:* When 1000 bytes flow into $N_1$, since the MTU is 620 bytes, each fragment has 20 bytes of header data, so only 600 bytes of actual data can be sent, thus, we need to divide into 2 fragments, say $F_1$ with 600 bytes,0 offset and $M = 1$, since one more fragment follows and $F_2$ with $1000-600=400$ bytes of data, $600/8=75$ offset and $M=0$ since no fragments follow.
+  - *Step 2:* Now the packets flow into $N_2$. Since the MTU is 400 bytes, each fragment can have only 380 bytes of actual data. We divide $F_1$ into two fragments say $F_(11)$ with 376 bytes#footnote[We cannot transfer 380 bytes of data since the data transferred must be a multiple of 8], 0 offset and $M=1$ and $F_(12)$ with $600-376=224$ bytes, $376/8=47$ offset.
+  - *Step 3:* Now we divide $F_2$ into two fragments say $F_(21)$ with 376 bytes, 75 offset and $M=1$ and $F_(22)$ with $400-376=24$ bytes, $75+376/8=122$ offset and $M=0$.
+  #align(center)[
+    #table(
+      columns: 4,
+      table.header([*Fragment*], [*Data (Bytes)*], [*Offset*], [*Flag M*]),
+      [$F_(11)$], [376], [0], [1],
+      [$F_(12)$], [224], [47], [0],
+      [$F_(21)$], [376], [75], [1],
+      [$F_(22)$], [24], [122], [0]
+    )
+  ]
+]
+
+The IP layer (Network Layer) sits on top of the Ethernet Layer (Datalink Layer) which has an MTU of 1500 bytes, thus the IP layer makes sure that larger packets are fragmented to fit this frame to avoid fragmentation at the Ethernet layer.
+
+#definition[IP Address][
+  An IP address is a 32-bit quantity expressed as $W.X.Y.Z$ where $.$s separate the four octets of the address, where each octet consists of 8 bits $[0, 255]$. It consists of two logical parts#footnote[The boundary between these parts is determined by the address class], _network_ and _host_. The network part identifies the specific network and the host part identifies the device withing that network.
+]
+A computer on the internet is addressed using a pair (network number#footnote[Assigned and managed by a central authority], host number#footnote[Assigned and managed by local network administrator]). During packet routing only the network number is looked at.
+
+There are five address classes:
+- *Class A:* Here, the first bit is 0, the addresses are in the range $[0.0.0.0, 127.255.255.255]$. The network/host split is 8/24 bits. It is generally used for very large networks up to 16 million hosts per network. Used exclusively for unicasting.
+- *Class B:* Here, the first two bits are 10, the addresses are in the range $[128.0.0.0, 191.255.255.255]$. The network/host split is 16/16 bits. It is generally used for medium-sized networks up to 65K hosts per network. Used exclusively for unicasting.
+- *Class C:* Here, the first three bits are 110, the addresses are in the range $[192.0.0.0, 223.255.255.255]$. The network/host split is 24/8 bits. It is generally used for small networks up to 254 hosts per network. Used exclusively for unicasting.
+- *Class D:* Here, the first four bits#footnote[The rest of the bits contain the multicast address] are 1110, the addresses are in the range $[224.0.0.0, 239.255.255.255]$. It is generally multicasting.
+- *Class E:* Here, the first four bits are 1111, the addresses are in the range $[240.0.0.0, 255.255.255.255]$. It is generally used for experimental or future use.
+
+Some special purpose IP addresses are:
+- IPs like $10.X.X.X$, $[172.16.X.X, 172.31.X.X]$ and $192.168.X.X$ are reserved for private use
+- $127.X.X.X$ is used for loopback/local address
+- $0.0.0.0$ is the default network
+- $255.255.255.255$ is used for limited broadcast
+
+For Class A, B and C, the first address identifies the network as the whole, e.g. $118.0.0.0$, 118 is the network part and all the host bits are 0 and the last address, also called directed broadcast address is used to send a message to all hosts on that specific network, e.g. $118.255.255.255$, 118 is the network part and the host bits are 1.
+
+== TCP and UDP
