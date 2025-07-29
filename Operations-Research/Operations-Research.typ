@@ -9,7 +9,10 @@
 
 #let definition-counter = counter("definition")
 #show: sectioned-counter(definition-counter, level: 2)
-#let definition = definition.with(counter: definition-counter)
+#let definition = definition.with(counter: definition-counter, sans-fonts: "IosevkaTerm NFP", title-fonts: "IosevkaTerm NFP")
+
+#set text(font: "IosevkaTerm NFP")
+#show math.equation: set text(font: "STIX Two Math")
 
 #show: ilm.with(
   title: [Operations Research],
@@ -18,6 +21,8 @@
 )
 
 = Network Flow Problem
+
+#set text(font: "IosevkaTerm NFP")
 
 #definition[Network][
   A network is described as $G=(N, L)$, where $N$ is the set of nodes and $L subset.eq N times N$ is the set of directed arcs/links.

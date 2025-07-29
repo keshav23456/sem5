@@ -1,6 +1,9 @@
 #import "@preview/ilm:1.4.1": *
 #import "@preview/physica:0.9.5": *
 #import "@preview/thmbox:0.2.0": *
+#import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
+
+#set text(font: "IosevkaTerm NF")
 
 #show: thmbox-init(counter-level: 2)
 #set text(lang: "en")
@@ -194,7 +197,7 @@ There are two strategies for managing fragmented packets as they traverse multip
 
 #example[IP Fragmentation][
   Consider two networks, $N_1$ and $N_2$ with MTUs $620$ bytes and $400$ bytes respectively. If some data of $1000$ bytes is to first pass through $N_1$ and then $N_2$, how will the fragmentation occur?
-  #align(center)[#image("IP-Fragmentation-Question.svg")]
+  #align(center)[#image("imgs/IP-Fragmentation-Question.svg")]
 ]
 #thmbox(
   variant: "Explanation",
@@ -239,3 +242,30 @@ Some special purpose IP addresses are:
 For Class A, B and C, the first address identifies the network as the whole, e.g. $118.0.0.0$, 118 is the network part and all the host bits are 0 and the last address, also called directed broadcast address is used to send a message to all hosts on that specific network, e.g. $118.255.255.255$, 118 is the network part and the host bits are 1.
 
 == TCP and UDP
+
+Applications interact with the TCP/IP protocol suite by sending/receiving TCP or UDP data, and both TCP and UDP then use the IP layer for delivery of packets.
+
+#figure(
+  diagram(
+    node((-1, 0), [User Process]),
+    edge((-1, 0), "d", "<->"),
+    node((-1, 1), [TCP]),
+    edge((-1, 1), "dr", "<->"),
+    node((0, 2), [IP]),
+    node((1, 0), [User Process]),
+    edge((1, 0), "d", "<->"),
+    node((1, 1), [UDP]),
+    edge((1, 1), "dl", "<->"),
+    edge((0, 2), "d", "<->"),
+    node((0, 3), [Datalink and Hardware Layer]),
+    node((1.7, 1), [Port Address (16 bit)]),
+    node((1.7, 2), [IP Address (32 bit)]),
+    node((1.7, 3), [Physical Address (48 bit)])
+  ),
+)
+
+TCP provides a connection-oriented, reliable, full-duplex, byte-stream to make up for the underlying unreliable IP layer. It provides end-to-end reliability using checksum, positive acknowledgements, timeouts and end-to-end flow control while also handling establishment and termination of connections between processes and sequencing of data that might reach the destination in an arbitrary order.
+
+UDP provides a connectionless and unreliable datagram service and is very similar to the IP layer in this respect. However, it does provide a checksum and port numbers to identify the processes at the two ends.
+
+*Port Numbers* are unique 16-bit identifiers used to distinguish different processes or services on a computer during network communication. The port numbers are stored in the headers of TCP/UDP packets. Certain ports are reserved#footnote[Ports $[1, 2023]$ are reserved for well-known services and has been extended up to 4095] for common services like 80 for http, 25 for SMTP, 21 for FTP. The ports which are assigned for short-lived communications are called ephemeral ports#footnote[The rest of the ports are ephemeral port numbers] used when a client initiates a connection to a server. The list of common ports is stored in `/private/etc/services`.
