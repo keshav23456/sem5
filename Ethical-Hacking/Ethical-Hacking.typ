@@ -264,8 +264,20 @@ Applications interact with the TCP/IP protocol suite by sending/receiving TCP or
   ),
 )
 
-TCP provides a connection-oriented, reliable, full-duplex, byte-stream to make up for the underlying unreliable IP layer. It provides end-to-end reliability using checksum, positive acknowledgements, timeouts and end-to-end flow control while also handling establishment and termination of connections between processes and sequencing of data that might reach the destination in an arbitrary order.
+TCP provides a connection-oriented, reliable, full-duplex#footnote[Communication mode where data can be sent and received simultaneously between two devices], byte-stream and allows multiplexing#footnote[Combining multiple data streams for transmission] and de-multiplexing#footnote[Separating data streams at receiver] to make up for the underlying unreliable IP layer. It provides end-to-end reliability using checksum, positive acknowledgements, timeouts and end-to-end flow control while also handling establishment and termination of connections between processes and sequencing of data that might reach the destination in an arbitrary order.
 
 UDP provides a connectionless and unreliable datagram service and is very similar to the IP layer in this respect. However, it does provide a checksum and port numbers to identify the processes at the two ends.
 
 *Port Numbers* are unique 16-bit identifiers used to distinguish different processes or services on a computer during network communication. The port numbers are stored in the headers of TCP/UDP packets. Certain ports are reserved#footnote[Ports $[1, 2023]$ are reserved for well-known services and has been extended up to 4095] for common services like 80 for http, 25 for SMTP, 21 for FTP. The ports which are assigned for short-lived communications are called ephemeral ports#footnote[The rest of the ports are ephemeral port numbers] used when a client initiates a connection to a server. The list of common ports is stored in `/private/etc/services`.
+
+Now, to describe a unique process-to-process connection a 5-tuple called *association* is used, (Protocol, Local Host (IP, Port), Remote Host (IP, Port)), such as (TCP, 144.16.192.5, 1785, 144.16.202.57,21).
+
+#figure(
+  image("imgs/Detailed-TCP.png"),
+  caption: [Detailed View of TCP]
+)
+
+#figure(
+  image("imgs/TCP-Format.png"),
+  caption: [Format of TCP Segment]
+)
