@@ -1,16 +1,19 @@
 #!/bin/bash
 
-# Get list of .typ files in current dir and its subdirectories (1 level deep)
-files=$(find . -maxdepth 2 -type f -name "*.typ" | sed 's|^\./||')
+# Get list of .typ files in current dir and subdirectories (1 level deep)
+file_list=$(find . -maxdepth 2 -type f -name "*.typ" | sed 's|^\./||')
 
 # Check if there are any .typ files
-if [ -z "$files" ]; then
+if [ -z "$file_list" ]; then
   echo "❌ No .typ files found in this folder or its subdirectories."
   exit 1
 fi
 
+# Add "Compile all" as first option
+files=$(echo -e "[Compile all]\n$file_list")
+
 # Let user pick one using fuzzy dropdown
-selected=$(echo "$files" | gum filter --placeholder "Select a .typ file to compile")
+selected=$(echo "$files" | gum filter --placeholder "Select a .typ file or 'Compile all'")
 
 # If user cancels or input is empty
 if [ -z "$selected" ]; then
@@ -18,17 +21,21 @@ if [ -z "$selected" ]; then
   exit 1
 fi
 
-# Get filename without extension
-filename=$(basename "$selected" .typ)
-
-# Output path
-output="pdfs/${filename}.pdf"
-
 # Ensure output directory exists
 mkdir -p pdfs
 
-# Compile using typst
-typst c "$selected" "$output"
-
-# Notify
-echo "✅ Compiled '$selected' → '$output'"
+if [ "$selected" = "[Compile all]" ]; then
+  echo "📦 Compiling all .typ files..."
+  while IFS= read -r file; do
+    filename=$(basename "$file" .typ)
+    output="pdfs/${filename}.pdf"
+    typst c "$file" "$output"
+    echo "✅ $file → $output"
+  done <<<"$file_list"
+else
+  # Single file case
+  filename=$(basename "$selected" .typ)
+  output="pdfs/${filename}.pdf"
+  typst c "$selected" "$output"
+  echo "✅ Compiled '$selected' → '$output'"
+fi
