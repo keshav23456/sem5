@@ -3,8 +3,6 @@
 #import "@preview/thmbox:0.2.0": *
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
 
-#set text(font: "IosevkaTerm NF")
-
 #show: thmbox-init(counter-level: 2)
 #set text(lang: "en")
 #set figure(numbering: none)

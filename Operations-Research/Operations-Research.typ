@@ -9,10 +9,7 @@
 
 #let definition-counter = counter("definition")
 #show: sectioned-counter(definition-counter, level: 2)
-#let definition = definition.with(counter: definition-counter, sans-fonts: "IosevkaTerm NFP", title-fonts: "IosevkaTerm NFP")
-
-#set text(font: "IosevkaTerm NFP")
-#show math.equation: set text(font: "STIX Two Math")
+#let definition = definition.with(counter: definition-counter)
 
 #show: ilm.with(
   title: [Operations Research],
