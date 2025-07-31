@@ -71,4 +71,20 @@ The growth rate is $gamma = (1 + r)^n$ which is exponential.
 However, if the interest is compounded $m$ times in an interval, then,
 $ V_n = P(1 + r/m)^(n m) $
 
+#definition[Effective Rate][
+  This is used to check which compounding method is more beneficial.
+  $ (1 + r/m)^m &= (1 + r_("eff")) \
+  therefore r_("eff") &= (1 + r/m)^m - 1 $
+]
 
+#definition[Inflation Rate][
+  It measures how quickly the general level of prices for goods and services rises over time. It is denoted by $f$. The real interest rate is,
+  $ 1+r_0 = (1 + r)/(1 + f) $
+]
+
+== Present & Future Value of a Cash Flow/Stream
+
+Consider $(x_i)^n_1$ to be the deposit (deposits occur at the beginning of each interval) at time $i$ and $r$ to be the constant interest rate across each interval, then the final value is,
+$ V = sum x_i (1 + r)^(n-i) $
+Similarly, we can find out the present value,
+$ P = sum x_i/(1 + r)^i $
