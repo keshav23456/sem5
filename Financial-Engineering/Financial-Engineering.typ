@@ -71,6 +71,9 @@ The growth rate is $gamma = (1 + r)^n$ which is exponential.
 However, if the interest is compounded $m$ times in an interval, then,
 $ V_n = P(1 + r/m)^(n m) $
 
+Now, if we consider the interest to be compounded continuously, i.e.
+$ lim_(m arrow infinity) V_n = P e^(r n) $
+
 #definition[Effective Rate][
   This is used to check which compounding method is more beneficial.
   $ (1 + r/m)^m &= (1 + r_("eff")) \
@@ -88,3 +91,22 @@ Consider $(x_i)^n_1$ to be the deposit (deposits occur at the beginning of each 
 $ V = sum x_i (1 + r)^(n-i) $
 Similarly, we can find out the present value,
 $ P = sum x_i/(1 + r)^i $
+
+== Bonds
+
+#definition[Bonds][
+  It is a fixed-income instrument that represents a loan made by an investor to a borrower (typically a corporation, municipality or government).
+]
+A bond is an obligation by the issuer to pay the money to the holder according to the rules as mentioned in the legal document at the time when the bond is issued.
+#definition[Maturity/Due/Redemption Date][
+  It is the date of the termination of the bond deal.
+]
+#definition[Face/Par Value][
+  It is the amount the issuer promises to pay at the maturity date.#footnote[It may be less than the bond price. This occurs when the coupon rate is higher than the prevailing market interest rate]
+]
+#definition[Coupon Rate][
+  It is the percent of the bond price paid periodically to the borrower.
+]
+
+If a bond is priced $P$ at a coupon rate of $c$ and has a face value of $F$ for some time interval $n$, then the total cash inflow is,
+$ V = c  n + F $
