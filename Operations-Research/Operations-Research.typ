@@ -23,8 +23,6 @@
 
 = Network Flow Problem
 
-#set text(font: "IosevkaTerm NFP")
-
 #definition[Network][
   A network is described as $G=(N, L)$, where $N$ is the set of nodes and $L subset.eq N times N$ is the set of directed arcs/links.
   $ L = {(i, j) in N times N | "there is a directed arc from node i to j"} $
