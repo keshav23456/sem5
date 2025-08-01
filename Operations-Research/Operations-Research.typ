@@ -11,6 +11,10 @@
 #show: sectioned-counter(definition-counter, level: 2)
 #let definition = definition.with(counter: definition-counter)
 
+#let algorithm = theorem.with(
+  variant: "Algorithm",
+)
+
 #show: ilm.with(
   title: [Operations Research],
   author: "Pooja Bansal",
@@ -81,4 +85,23 @@ A directed cycle is $4 arrow 5 arrow 4$. An undirected cycle is $1 arrow 3 arrow
 If a tree has $n$ nodes, then it will have $n-1$ links.
 #definition[Spanning Tree][
   A tree that links all the nodes of a network.
+]
+#definition[Minimum Spanning Tree][
+  A tree with the minimum possible total edge weights.
+]
+#definition[Link Capacity][
+  It is the maximum amount of flow that can pass through a directed link. The link capacity function is 
+  $ u: L arrow bb(R)_(>= 0) $
+]
+
+#algorithm[Prim's Algorithm][
+  + Start with any node and connect with the closest distinct node. Tick all the connected nodes
+  + Identify the unconnected node that is closest to the ticked nodes and connect
+  + Repeat step 1 and 2
+]
+
+#algorithm[Kruskal's Algorithm][
+  + Sort all edges in ascending order of weights
+  + Take the smallest edge not yet taken and add it to the tree if it does not create a cycle
+  + Repeat step 2
 ]
