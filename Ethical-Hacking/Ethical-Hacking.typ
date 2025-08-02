@@ -279,3 +279,62 @@ Now, to describe a unique process-to-process connection a 5-tuple called *associ
   image("imgs/TCP-Format.png"),
   caption: [Format of TCP Segment]
 )
+
+- *Source/Destination Ports* are 16 bits each
+- *Sequence Number* indicates the sequence number of the first byte of data in this segment. It is used to keep track of the order of bytes for reliable delivery (32 bits)
+- *Acknowledgement Number* is used for reliable transfer and acknowledgement. If the `ACK` flag is set, this field contains the value of the next expected byte from the sender (32 bits)
+- *HLEN* specifies the length of the TCP header in 32-bit words (4 bits)
+- *Reserved* is reserved for future use (3 bits)
+- *Flags* control bits that manage the state and flow of the connection, some important flags are:
+  - *URG:* Urgent pointer field significant
+  - *ACK:* Acknowledgement field significant
+  - *PSH:* Push function
+  - *RST:* Reset the connection
+  - *SYN:* Synchronize sequence numbers (used to initialise connection)#footnote[A connection request is sent by making $"SYN"=1$ and $"ACK"=0$ and it is confirmed by making $"SYN"=1$ and $"ACK"=1$]
+  - *FIN:* No more data from sender (used to terminate the connection)
+- *Window Size:* specifies the size of the sender's receive window#footnote[how many bytes the sender is willing to accept]. It is used for flow of control. Value of zero closes the window (16 bits)
+- *Checksum:* It applies to the entire segment and is a pseudo-header. It contains the following IP header fields: Source IP address, Destination IP address, Protocol, Segment Length. It uses the same algorithm as in IP (16 bits)
+
+A TCP connection is established using a 3-way handshake.
+#figure(
+  image("imgs/TCP-Connection.png"),
+  caption: [TCP Connection Establishment]
+)
+However, a half-open (incomplete) connection can result in possible attack scenarios like:
+- Create many half-open connections to target
+- Ignore SYN+ACK response
+- Target connection table fills up resulting in DoS attack
+
+A TCP connection is terminated using a 4-way handshake.
+#figure(
+  image("imgs/TCP-Termination.png"),
+  caption: [TCP Connection Termination]
+)
+
+#figure(
+  image("imgs/Format-UDP-Datagram.png"),
+  caption: [Format of UDP Segment]
+)
+
+- *Checksum* is an optional field which is set to zero if not used (16 bits)
+- *Source/Destination Ports* are 16 bits each
+- *Message Length:* specifies the size of the datagram in bytes (UDP header and data) (16 bits)
+
+== IP Subnetting
+
+#definition[Subnet][
+  A subnet is a smaller, logically defined segment of a larger IP network, created using a subnet mask.
+]
+Subnet is short for subnetwork, the smaller more manageable sections are made by borrowing bits from the host portion of an IP address and using them to create additional network addresses within the original network. This process is called subnetting. Thus, IP subnets introduce a third level of hierarchy, network portion, subnet portion and host portion.
+
+A natural mask is the default subnet mask assigned to a classful IP address. It refers to the original, default subnet mask that corresponds to the traditional class-based division of IP addresses (Class A, B, or C) before any subnetting is applied. This simply separates the network and host portions. The natural mask for class A is $255.0.0.0$, class B is $255.255.0.0$ and class C is $255.255.255.0$.
+
+Consider an address $10.0.0.20$, the natural mask provides a mechanism to split into a network portion of 10 and a host portion of 20 by computing the bitwise AND of $10.0.0.20$ and $255.0.0.0$.
+
+Masks are very flexible and using them can divide a network into smaller subnets by extending the network portion of the addresses into the host portion. This also reduces the number of hosts per network.
+
+Consider a network mask of $255.255.0.0$ applied on $10.5.0.20$. This divides the address into a network portion of 10, a subnet portion of 5 and a host portion of 20. Thus, the initially large single Class A network is not split into 256 subnets (from 10.0.0.0 to 10.255.0.0) and the hosts per subnet decreases to $2^16-1$ from $2^24-1$.
+
+To further allow better utilization of available addresses we can use subnets of different sizes. This is called *Variable Length Subnet Mask*. Consider a Class C network $192.203.17.0$ to be divided into three subnets with 110, 45 and 50 hosts. Thus, we can use first use the mask $255.255.255.128$ to divide into two subnets with 128 hosts each, i.e. $192.203.17.0$ to $192.203.17.127$ and $192.203.17.128$ to $192.203.17.255$ , now subnet the second $.128$ using a mask of $255.255.255.192$ to creating $192.203.17.128$ to $192.203.17.191$ and $192.203.17.192$ to $192.203.17.255$.
+
+There is also another concept *Classless Internet Domain Routing (CIDR)* to manage IP addresses which has no concept of Class A, B or C networks and helps reduce sizes of routing tables. Here, an IP address is represented by a prefix, which is the IP address of the network. E.g. $144.16.192.57 slash 18$, this means the 18 leftmost continuous bits are to be used for the network mask. The number of addresses in each block must be a power of 2 and the beginning addresses in each block must be divisible by the number of addresses in the block. E.g. for a $slash 28$ block (16 addresses), valid starting addresses are $... slash 0$, $... slash 16$, $... slash 32$, etc. This is the method used today.
