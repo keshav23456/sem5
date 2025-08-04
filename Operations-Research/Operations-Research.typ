@@ -103,3 +103,66 @@ If a tree has $n$ nodes, then it will have $n-1$ links.
   + Take the smallest edge not yet taken and add it to the tree if it does not create a cycle
   + Repeat step 2
 ]
+
+#algorithm[Dijkstra's Algorithm][
+  It is a fundamental algorithm to find the *shortest path* from a single source node to all other nodes in a weighted directed graph with non-negative edge weights.
+  + Assign distance 0 to the source node, ∞ to all others; mark all nodes unvisited
+  + While unvisited nodes remain:
+    + Pick the unvisited node with the smallest distance
+    + For each neighbor, update its distance if a shorter path is found via the current node
+    + Mark the current node as visited (its shortest path is finalized)
+]
+
+#example[Dijkstra's Algorithm][
+  #figure(
+    diagram(
+      node-stroke: .1em,
+      node-fill: gradient.radial(blue.lighten(80%), blue, center: (30%, 20%), radius: 80%),
+      spacing: 2em,
+      node((0, 0), "1", radius: 2em),
+      edge((0, 0), (1, -1), 2, "|->"),
+      edge((0, 0), (1, 1), 4, "|->"),
+      edge((0, 0), (2, 0), 10, "|->"),
+      node((1, -1), "2", radius: 2em),
+      edge((1, -1), (3, -1), 5, "|->"),
+      edge((1, -1), (2, 0), 11, "|->"),
+      node((3, -1), "5", radius: 2em),
+      edge((3, -1), (4, 0), 5, "|->"),
+      node((2, 0), "4", radius: 2em),
+      edge((2, 0), (3, -1), 8, "|->"),
+      edge((2, 0), (3, 1), 7, "|->"),
+      node((4, 0), "7", radius: 2em),
+      node((1, 1), "3", radius: 2em),
+      edge((1, 1), (2, 0), 3, "|->"),
+      edge((1, 1), (3, 1), 1, "|->"),
+      node((3, 1), "6", radius: 2em),
+      edge((3, 1), (4, 0), 9, "|->"),
+    )
+  )
+Find the shortest distance and path from 1 to 7.
+]
+#v(-1fr)
+#thmbox(
+  title: "",
+  variant: "Explanation",
+  color: green,
+  numbering: none
+)[
+  #table(
+    fill: none,
+    columns: 8,
+    table.header([*Iteration\
+    (Node Finalized)*], [*1*], [*2*], [*3*], [*4*], [*5*], [*6*], [*7*]),
+    [0], [$infinity$], [$infinity$], [$infinity$],[$infinity$],[$infinity$],[$infinity$],[$infinity$],
+    [1 (1)], [0], [2], [4], [10], [$infinity$], [$infinity$], [$infinity$],
+    [2 (2)], [0], [2], [4], [10], [7], [$infinity$], [$infinity$],
+    [3 (3)], [0], [2], [4], [7], [7], [5], [$infinity$],
+    [4 (6)], [0], [2], [4], [7], [7], [5], [14],
+    [5 (5)], [0], [2], [4], [7], [7], [5], [12],
+    [6 (4)], [0], [2], [4], [7], [7], [5], [12],
+    [7 (7)], [0], [2], [4], [7], [7], [5], [12],
+  )
+
+  Now, to find the path, we retrace the path we took to get to the shortest distance, i.e., we got 12 after finalising node 5, and so on, thus getting the path,
+  $ 1 arrow 2 arrow 5 arrow 7 $
+]
