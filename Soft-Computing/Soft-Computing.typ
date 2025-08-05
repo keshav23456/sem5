@@ -146,3 +146,37 @@ Some emerging trends are:
 - *Edge Computing + Soft Computing:* Real time intelligent systems
 - *Explainable AI (XAI):* Making neural models interpretable
 - *Federated Learning:* Privacy-preserving distributed learning
+
+= Fuzzy Systems
+
+A fuzzy system is a rule-based system that uses fuzzy set theory to model uncertainty, vagueness, and imprecise information that use degrees of freedom $in [0, 1]$.
+
+#definition[Fuzzy Set][
+  A fuzzy set $A$ in a universe of discourse $X$ is characterized by a membership function $mu_A: X arrow [0, 1]$ which represents the degree of membership of $x$ in $A$. Here $A = {(x, mu_A (x)) | x in X}$.
+]
+These sets can be ordered or unordered and discrete or continuous.
+
+#definition[Membership Function][
+  It defines how each input value maps to its degree of membership in a fuzzy set.
+]
+Some common membership functions are:
+- *Triangular Membership Function:* It is defined by a triplet $(a, b, c)$ where $a$ is the lower limit, $b$ is the peak point and $c$ is the upper limit. It is defined as,
+$ mu(x) = max(0, min((x-a)/(b-a), (c-x)/(c-b))) $
+- *Trapezoidal Membership Function:* It is defined by a four-tuple $(a, b, c, d)$ such that,
+$ mu(x) = cases(
+  0 "if" x <= a or x >= d,
+  (x- a)/(x- b) "if" a < x < b,
+  1 "if" b <= x < c,
+  (d-x)/(d-c) "if" c < x < d
+) $
+- *Gaussian Membership Function:* This has a bell shaped curve,
+$ mu(x) = e^(-(x-c)^2/(2 sigma^2)) $
+
+== Properties of Membership Functions
+
+- $"support"(A) = {x | mu_A (x) > 0 }$
+- $"core"(A) = {x | mu_A (x) = 1}$
+- The *height* is the maximum membership value assigned to any of its elements
+- A fuzzy set is *normal* if its core is non-empty or $exists x in X (mu_A (x) = 1)$
+- $"crossover"(A) = {x | mu_A (x) = 0.5}$
+- A fuzzy set if *convex* iff for any $x_1, x_2 in X$ and any $lambda in [0, 1]$, $mu_A (lambda x_1 + (1- lambda)x_2) >= min {mu_A (x_1), mu_A (x_2)}$
