@@ -166,3 +166,22 @@ Find the shortest distance and path from 1 to 7.
   Now, to find the path, we retrace the path we took to get to the shortest distance, i.e., we got 12 after finalising node 5, and so on, thus getting the path,
   $ 1 arrow 2 arrow 5 arrow 7 $
 ]
+
+#definition[Source Node][
+  It is the node where the flow originates. It only has outward edges.
+]
+#definition[Sink Node][
+  It is the node where the flow ends. It only has inward edges.
+]
+#definition[Bottleneck Capacity][
+  It is the minimum capacity of any edge in a path.
+]
+#definition[Residual Capacity][
+  Every edge of a residual network has a value called residual capacity which is equal to the difference between the original flow capacity and the current flow.
+]
+#definition[Residual Network][
+  It is the network obtained after some residuals have been assigned to the links.
+]
+#definition[Augmenting Path][
+  It is a path from the source to the sink in a residual graph along which additional flow can be pushed.
+]

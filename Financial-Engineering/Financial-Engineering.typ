@@ -95,7 +95,7 @@ $ P = sum x_i/(1 + r)^i $
 == Bonds
 
 #definition[Bonds][
-  It is a fixed-income instrument that represents a loan made by an investor to a borrower (typically a corporation, municipality or government).
+  It is a fixed-income instrument that represents a loan made by an investor to a buyer (typically a corporation, municipality or government).
 ]
 A bond is an obligation by the issuer to pay the money to the holder according to the rules as mentioned in the legal document at the time when the bond is issued.
 #definition[Maturity/Due/Redemption Date][
@@ -105,8 +105,39 @@ A bond is an obligation by the issuer to pay the money to the holder according t
   It is the amount the issuer promises to pay at the maturity date.#footnote[It may be less than the bond price. This occurs when the coupon rate is higher than the prevailing market interest rate]
 ]
 #definition[Coupon Rate][
-  It is the percent of the bond price paid periodically to the borrower.
+  It is the percent of the bond price paid periodically to the buyer.
 ]
 
 If a bond is priced $P$ at a coupon rate of $c$ and has a face value of $F$ for some time interval $n$, then the total cash inflow is,
 $ V = c  n + F $
+
+The *bid price* is the highest price a buyer is willing to pay for a bond and the *ask price* is the lowest a seller is willing to accept for a bond. The difference is called a *spread* which reflects market liquidity and risk. Only once the prices meet, is a bond sold and bought.
+
+#definition[Price of a Bond][
+  It is the price at which the seller sells the bond to the buyer.
+]
+#definition[Bond Quality Rating][
+  It is a grade assigned by credit rating agencies that reflects the risk of default, i.e. the chance that the issuer will fail to make scheduled payments.
+]
+Some major bond rating agencies are:
+#columns(2)[
+  - Standard & Poor's
+  - Moody's
+  - Fitch Ratings
+  #colbreak()
+  - CRISIL
+  - ICRA
+  - India Ratings (Fitch subsidiary)
+]
+The ratings#footnote[These ranks have no relation with the coupon rate] start from AAA and AA being the highest grade, with A and BB being medium grade and CCC, CC, C and D being default.
+
+#definition[Yield To Maturity][
+  It is the internal rate of return earned by an investor who buys a bond at its current market price and holds it until maturity, assuming all coupon payments are made as scheduled and reinvested at the same rate.
+]
+
+=== Bond Price Formula
+
+Consider a standard bonus with face value $F$, $m$ coupon payments per year for $n$ years and $y$ TTM, then the price of the bond is,
+$ P &= sum_1^(m n) (c/ m)/ (1 + y/m)^i + F/(1 + y/m)^(m n) \ 
+  &= F/(1 + y/m)^(m n) + c/ y [ 1- 1 / (1 + y/m)^(m n) ]
+$
