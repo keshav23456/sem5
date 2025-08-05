@@ -105,7 +105,7 @@ A bond is an obligation by the issuer to pay the money to the holder according t
   It is the amount the issuer promises to pay at the maturity date.#footnote[It may be less than the bond price. This occurs when the coupon rate is higher than the prevailing market interest rate]
 ]
 #definition[Coupon Rate][
-  It is the percent of the bond price paid periodically to the buyer.
+  It is the percent of the face value paid periodically to the buyer.
 ]
 
 If a bond is priced $P$ at a coupon rate of $c$ and has a face value of $F$ for some time interval $n$, then the total cash inflow is,
