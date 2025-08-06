@@ -141,3 +141,6 @@ Consider a standard bonus with face value $F$, $m$ coupon payments per year for 
 $ P &= sum_1^(m n) (c/ m)/ (1 + y/m)^i + F/(1 + y/m)^(m n) \ 
   &= F/(1 + y/m)^(m n) + c/ y [ 1- 1 / (1 + y/m)^(m n) ]
 $
+
+Now, if we consider the yield to be compounded continuously, we get,
+$ P_t = F e^(-y(T- t)) + c((1-e^(-y(T-t)))/(e^((T-t)/n))) $
