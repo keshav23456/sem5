@@ -144,3 +144,10 @@ $
 
 Now, if we consider the yield to be compounded continuously, we get,
 $ P_t = F e^(-y(T- t)) + c((1-e^(-y(T-t)))/(e^((T-t)/n))) $
+
+When the coupon rate is less than the yield, i.e. the price is less than the face value, we say that the bond is issued at a discount. When the price is more than the face value, the bond is issued at a premium. We can see this with the following,
+$
+P &= sum (c F)/(1+c)^i + F/(1 + c)^n \
+&= F
+$
+Thus, if $c = y$, then the bond price is the same as the face value.
