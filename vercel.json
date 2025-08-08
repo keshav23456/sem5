@@ -1,27 +1,23 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "build.js",
-        "use": "@vercel/node",
-        "config": {
-          "includeFiles": "**/*.typ"
-        }
-      }
-    ],
-    "routes": [
-      {
-        "src": "/",
-        "dest": "/public/index.html"
-      },
-      {
-        "src": "/pdfs/(.*)",
-        "dest": "/public/pdfs/$1"
-      }
-    ],
-    "functions": {
-      "build.js": {
-        "maxDuration": 60
+  "version": 2,
+  "builds": [
+    {
+      "src": "build.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": "**/*.typ",
+        "maxLambdaSize": "50mb"
       }
     }
-  }
+  ],
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/public/index.html"
+    },
+    {
+      "src": "/pdfs/(.*)",
+      "dest": "/public/pdfs/$1"
+    }
+  ]
+}
