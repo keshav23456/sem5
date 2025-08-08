@@ -1,0 +1,12 @@
+{
+    "name": "semester-5-notes",
+    "version": "1.0.0",
+    "description": "Academic notes compiled from Typst to PDF",
+    "scripts": {
+      "build": "node build.js",
+      "dev": "node build.js && npx serve public"
+    },
+    "devDependencies": {
+      "serve": "^14.2.1"
+    }
+  }
